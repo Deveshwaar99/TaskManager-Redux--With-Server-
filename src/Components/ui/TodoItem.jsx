@@ -1,35 +1,35 @@
-import { Button, Progress } from "antd"
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
-import PropTypes from "prop-types"
-import { useState } from "react"
-import ShowModal from "./ShowModal"
-import { useDeleteTodoMutation, useEditTodoMutation } from "../Store"
+import { Button, Progress } from 'antd'
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import PropTypes from 'prop-types'
+import { useState } from 'react'
+import ShowModal from './ShowModal'
+import { useDeleteTodoMutation, useEditTodoMutation } from '../../Store'
 
-function TodoItem({ task, priority, id }) {
+function TodoItem({ title,description, priority, id }) {
   const [deleteTodo] = useDeleteTodoMutation()
   const [editTodo] = useEditTodoMutation()
 
   const color = () => {
-    if (priority === "MEDIUM") {
-      return " text-yellow-400"
-    } else if (priority === "LOW") {
-      return " text-green-500"
+    if (priority === 'MEDIUM') {
+      return ' text-yellow-400'
+    } else if (priority === 'LOW') {
+      return ' text-green-500'
     } else {
-      return "text-red-500"
+      return 'text-red-500'
     }
   }
   //Progress button and Progress bar
-  const [progress, setProgress] = useState("To Do")
+  const [progress, setProgress] = useState('To Do')
   const [percent, setPercent] = useState(0)
   function handleProgress() {
-    if (progress === "To Do") {
-      setProgress(() => "In Progress")
+    if (progress === 'To Do') {
+      setProgress(() => 'In Progress')
       setPercent(50)
-    } else if (progress === "In Progress") {
-      setProgress(() => "Completed")
+    } else if (progress === 'In Progress') {
+      setProgress(() => 'Completed')
       setPercent(100)
     } else {
-      setProgress(() => "To Do")
+      setProgress(() => 'To Do')
       setPercent(0)
     }
   }
@@ -51,9 +51,13 @@ function TodoItem({ task, priority, id }) {
 
   return (
     <div className="bg-white mt-4 py-6 px-8 flex flex-row justify-between rounded-3xl items-center">
-      <div className=" w-1/5 flex flex-col">
-        <span className="mb-2 text-sm font-normal text-slate-500">Task</span>
-        <span className="text-base font-bold leading-tight">{task}</span>
+      <div className=" w-2/5 flex flex-col">
+        <span className="mb-2 text-sm font-normal text-slate-500">title</span>
+        <span className="text-base font-bold leading-tight">{title}</span>
+      </div>
+      <div className=" w-4/5 flex flex-col">
+        <span className="mb-2 text-sm font-normal text-slate-500">Description</span>
+        <span className="text-base font-bold leading-tight">{description}</span>
       </div>
       <div className=" w-1/5 flex flex-col">
         <span className="mb-2 text-sm font-normal text-slate-500">
@@ -76,7 +80,8 @@ function TodoItem({ task, priority, id }) {
       <ShowModal
         open={open || false}
         setOpen={setOpen}
-        currentTask={task}
+        currentTask={title}
+        currentDescription={description}
         currentPriority={priority}
         callDispatch={callDispatch}
       />
@@ -85,9 +90,10 @@ function TodoItem({ task, priority, id }) {
 }
 
 TodoItem.propTypes = {
-  task: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   priority: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 }
 
 export default TodoItem

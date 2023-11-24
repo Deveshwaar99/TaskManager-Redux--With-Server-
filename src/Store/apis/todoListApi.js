@@ -1,55 +1,69 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const todoListApi = createApi({
-  reducerPath: "todoList",
+  reducerPath: 'todoList',
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000",
+    baseUrl: 'http://localhost:3000/users/profile',
+    prepareHeaders: (headers) => {
+      const token = window.localStorage.token
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`)
+      }
+
+      return headers
+    },
   }),
+
   endpoints(builder) {
     return {
       getTodo: builder.query({
         query: () => {
           return {
-            url: "/List",
-            method: "GET",
+            url: '/task',
+            method: 'GET',
           }
         },
-        providesTags: ["Todo"],
+        providesTags: ['Todo'],
       }),
+
       addTodo: builder.mutation({
         query: (item) => {
           return {
-            url: "/List",
-            method: "POST",
+            url: '/task',
+            method: 'POST',
             body: {
-              task: item.task,
+              title: item.title,
               priority: item.priority,
+              description: item.description,
             },
           }
         },
-        invalidatesTags: ["Todo"],
+        invalidatesTags: ['Todo'],
       }),
+
       editTodo: builder.mutation({
         query: (item) => {
           return {
-            url: `/List/${item.id}`,
-            method: "PUT",
+            url: `/task/${item.id}`,
+            method: 'PATCH',
             body: {
-              task: item.task,
+              title: item.title,
               priority: item.priority,
+              description: item.description,
             },
           }
         },
-        invalidatesTags: ["Todo"],
+        invalidatesTags: ['Todo'],
       }),
+
       deleteTodo: builder.mutation({
         query: (id) => {
           return {
-            url: `/List/${id}`,
-            method: "DELETE",
+            url: `/task/${id}`,
+            method: 'DELETE',
           }
         },
-        invalidatesTags: ["Todo"],
+        invalidatesTags: ['Todo'],
       }),
     }
   },

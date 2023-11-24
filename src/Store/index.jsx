@@ -1,14 +1,18 @@
-import { configureStore } from "@reduxjs/toolkit"
-import { setupListeners } from "@reduxjs/toolkit/query"
+import { configureStore } from '@reduxjs/toolkit'
+import { setupListeners } from '@reduxjs/toolkit/query'
 //import { addTodo, deleteTodo, editTodo } from "./Slice/listSlice"
-import { todoListApi } from "./apis/todoListApi"
-
+import { todoListApi } from './apis/todoListApi'
+import { userApi } from './apis/userApi'
 const store = configureStore({
   reducer: {
     [todoListApi.reducerPath]: todoListApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(todoListApi.middleware)
+    return getDefaultMiddleware().concat(
+      todoListApi.middleware,
+      userApi.middleware
+    )
   },
 })
 
@@ -19,5 +23,6 @@ export {
   useAddTodoMutation,
   useDeleteTodoMutation,
   useEditTodoMutation,
-} from "./apis/todoListApi"
+} from './apis/todoListApi'
+export { useSignupMutation, useLoginUserMutation } from './apis/userApi'
 export default store
