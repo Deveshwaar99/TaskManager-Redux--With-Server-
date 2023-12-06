@@ -26,9 +26,9 @@ const ShowModal = ({
     }
   }, [open])
   useEffect(() => {
-    setTask(currentTask || '') // Update task state when currentTask changes
-    setPriority(currentPriority || 'HIGH') // Update priority state when currentPriority changes
-  }, [currentTask, currentPriority]) // Watch for changes in these props
+    setTask(currentTask || '')
+    setPriority(currentPriority || 'HIGH')
+  }, [currentTask, currentPriority])
 
   const handleOk = () => {
     setConfirmLoading(true)
@@ -79,14 +79,14 @@ const ShowModal = ({
             className="rounded-2xl w-11/12 p-4 shadow-md mb-4 text-md"
             placeholder="Type your task here..."
             value={task}
-            onChange={(e) => setTask(e.target.value)}
+            onChange={e => setTask(e.target.value)}
           />
           <Input
             maxLength={20}
             className="rounded-2xl w-11/12 p-4 shadow-md mb-4 text-md"
             placeholder="Type your description here..."
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={e => setDescription(e.target.value)}
           />
         </div>
         <div>
