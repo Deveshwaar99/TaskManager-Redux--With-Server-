@@ -5,7 +5,7 @@ import { useState } from 'react'
 import ShowModal from './ShowModal'
 import { useDeleteTodoMutation, useEditTodoMutation } from '../../Store'
 
-function TodoItem({ title,description, priority, id }) {
+function TodoItem({ title, description, priority, id }) {
   const [deleteTodo] = useDeleteTodoMutation()
   const [editTodo] = useEditTodoMutation()
 
@@ -51,29 +51,31 @@ function TodoItem({ title,description, priority, id }) {
 
   return (
     <div className="bg-white mt-4 py-6 px-8 flex flex-row justify-between rounded-3xl items-center">
-      <div className=" w-2/5 flex flex-col">
-        <span className="mb-2 text-sm font-normal text-slate-500">title</span>
+      <div className="w-1/4 flex flex-col">
+        <span className="mb-2 text-sm font-normal text-slate-500">Title</span>
         <span className="text-base font-bold leading-tight">{title}</span>
       </div>
-      <div className=" w-4/5 flex flex-col">
-        <span className="mb-2 text-sm font-normal text-slate-500">Description</span>
+      <div className="w-1/4 flex flex-col">
+        <span className="mb-2 text-sm font-normal text-slate-500">
+          Description
+        </span>
         <span className="text-base font-bold leading-tight">{description}</span>
       </div>
-      <div className=" w-1/5 flex flex-col">
+      <div className="w-1/4 flex flex-col">
         <span className="mb-2 text-sm font-normal text-slate-500">
           Priority
         </span>
-        <span className={` text-base font-bold leading-tight ${color()}`}>
+        <span className={`text-base font-bold leading-tight ${color()}`}>
           {priority}
         </span>
       </div>
-      <div className=" w-1/5 cursor-pointer rounded-lg text-xs font-bold outline-none">
+      <div className="w-1/4 cursor-pointer rounded-lg text-xs font-bold outline-none">
         <Button onClick={handleProgress}>{progress}</Button>
       </div>
-      <div className=" w-1/5 py-3 flex flex-row justify-center">
+      <div className="w-1/4 py-3 flex flex-row justify-center">
         <Progress size={20} type="circle" percent={percent} />
       </div>
-      <div className=" w-1/5 flex flex-row justify-around">
+      <div className="w-1/4 flex flex-row justify-around">
         <EditOutlined style={{ fontSize: 25 }} onClick={handleEdit} />
         <DeleteOutlined onClick={handleDelete} style={{ fontSize: 25 }} />
       </div>

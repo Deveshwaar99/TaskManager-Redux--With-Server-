@@ -12,7 +12,7 @@ function TodoList() {
   const [addTodo] = useAddTodoMutation()
   const { data, error, isFetching } = useGetTodoQuery()
 
-  const callDispatch = (taskObject) => {
+  const callDispatch = taskObject => {
     addTodo(taskObject)
   }
   const buttonStyles = {
@@ -27,23 +27,41 @@ function TodoList() {
 
   if (isFetching) {
     renderedList = (
-      <>
-        <Skeleton variant="rounded" width={500} height={100} />
+      <div className=" my-5 max-w-full">
+        <Skeleton variant="rounded" width="100%" height={100} />
         <br />
-        <Skeleton variant="rounded" width={500} height={100} />
+        <Skeleton variant="rounded" width="100%" height={100} />
         <br />
-        <Skeleton variant="rounded" width={500} height={100} />
+        <Skeleton variant="rounded" width="100%" height={100} />
         <br />
-      </>
+      </div>
     )
   } else if (error) {
-    console.log('Error in Fetching list')
-    renderedList = <p>Error in fetching List</p>
-  } else if (data.length === 0) renderedList = <p>No TODOS available</p>
+    // console.log('Error in Fetching list')
+
+    renderedList = (
+      <div className="my-4 bg-red-200 text-red-800 p-4 rounded-lg">
+        <p>
+          It seems there is an issue fetching the data. Please refresh the page
+          or try again later.
+        </p>
+      </div>
+    )
+  } else if (data.length === 0)
+    renderedList = (
+      <div className="m-4 p-4 bg-gray-100 text-gray-600 rounded-lg">
+        <p>No Todos available.</p>
+      </div>
+    )
   else {
-    renderedList = data.map((item) => (
+    renderedList = data.map(item => (
       <div key={item._id}>
-        <TodoItem title={item.title} priority={item.priority} description={item?.description||"No Description"} id={item._id} />
+        <TodoItem
+          title={item.title}
+          priority={item.priority}
+          description={item?.description || 'No Description'}
+          id={item._id}
+        />
       </div>
     ))
   }
